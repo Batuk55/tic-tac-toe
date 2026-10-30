@@ -1,0 +1,395 @@
+/* ==============================
+   GLOBAL STYLING
+================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #090919, #151538, #101027);
+  color: white;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated background glow */
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  z-index: -1;
+  animation: glowMove 8s infinite alternate ease-in-out;
+}
+
+body::before {
+  background: #7b2ff7;
+  top: -100px;
+  left: -100px;
+}
+
+body::after {
+  background: #00d4ff;
+  bottom: -100px;
+  right: -100px;
+  animation-delay: 2s;
+}
+
+@keyframes glowMove {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(100px, 80px);
+  }
+}
+
+/* ==============================
+   MAIN HEADING
+================================= */
+
+h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+
+  background: linear-gradient(90deg, #00eaff, #a855f7, #ff4ecd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+
+  text-shadow: 0 0 35px rgba(0, 234, 255, 0.2);
+
+  animation: headingAppear 1s ease;
+}
+
+@keyframes headingAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================
+   GAME CONTAINER
+================================= */
+
+.container {
+  min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* ==============================
+   GAME BOARD
+================================= */
+
+.game {
+  height: min(65vmin, 480px);
+  width: min(65vmin, 480px);
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  gap: 12px;
+  padding: 15px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 25px;
+
+  backdrop-filter: blur(15px);
+
+  box-shadow:
+    0 0 30px rgba(0, 212, 255, 0.1),
+    0 15px 50px rgba(0, 0, 0, 0.5);
+
+  animation: boardAppear 0.8s ease;
+}
+
+@keyframes boardAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ==============================
+   GAME BOXES
+================================= */
+
+.box {
+  width: 100%;
+  height: 100%;
+
+  background: rgba(255, 255, 255, 0.07);
+
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+
+  color: white;
+  font-size: clamp(2rem, 8vmin, 4.5rem);
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box:not(:disabled):hover {
+  transform: scale(1.06);
+  background: rgba(0, 212, 255, 0.12);
+  border-color: #00eaff;
+
+  box-shadow:
+    0 0 15px rgba(0, 234, 255, 0.4),
+    inset 0 0 15px rgba(0, 234, 255, 0.1);
+}
+
+.box:not(:disabled):active {
+  transform: scale(0.94);
+}
+
+.box:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* Symbol appearance animation */
+
+@keyframes symbolAppear {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.box:not(:empty) {
+  animation: symbolAppear 0.3s ease;
+}
+
+/* ==============================
+   RESET GAME BUTTON
+================================= */
+
+.reset {
+  padding: 15px 35px;
+  margin: 20px 8px 35px;
+
+  background: linear-gradient(135deg, #7b2ff7, #00c6ff);
+
+  border: none;
+  border-radius: 50px;
+
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 20px rgba(123, 47, 247, 0.4);
+
+  transition: all 0.3s ease;
+}
+
+.reset:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 198, 255, 0.5);
+}
+
+.reset:active {
+  transform: scale(0.95);
+}
+
+/* ==============================
+   NEW GAME BUTTON
+================================= */
+
+.new-btn {
+  padding: 16px 40px;
+  margin: 20px 8px 35px;
+
+  background: linear-gradient(135deg, #ff4ecd, #7b2ff7);
+
+  border: none;
+  border-radius: 50px;
+
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 5px 25px rgba(255, 78, 205, 0.35);
+
+  transition: all 0.3s ease;
+}
+
+.new-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 35px rgba(255, 78, 205, 0.6);
+}
+
+.new-btn:active {
+  transform: scale(0.95);
+}
+
+/* ==============================
+   WINNER MESSAGE OVERLAY
+================================= */
+
+.msg-container {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  gap: 25px;
+
+  background: rgba(5, 5, 20, 0.88);
+  backdrop-filter: blur(15px);
+
+  z-index: 10;
+
+  animation: overlayAppear 0.4s ease;
+}
+
+@keyframes overlayAppear {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Winner text */
+
+#msg {
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  font-weight: 800;
+  padding: 20px;
+
+  background: linear-gradient(90deg, #00eaff, #c084fc, #ff4ecd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+
+  animation: winnerPulse 1.5s infinite alternate;
+}
+
+@keyframes winnerPulse {
+  from {
+    transform: scale(1);
+    text-shadow: 0 0 10px rgba(0, 234, 255, 0.2);
+  }
+
+  to {
+    transform: scale(1.05);
+    text-shadow: 0 0 25px rgba(192, 132, 252, 0.7);
+  }
+}
+
+/* ==============================
+   HIDE CLASS
+================================= */
+
+.hide {
+  display: none;
+}
+
+/* ==============================
+   RESPONSIVE DESIGN
+================================= */
+
+@media (max-width: 600px) {
+  h1 {
+    margin-top: 35px;
+  }
+
+  .container {
+    min-height: 65vh;
+  }
+
+  .game {
+    height: 88vw;
+    width: 88vw;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .box {
+    border-radius: 13px;
+    font-size: 12vw;
+  }
+
+  .reset {
+    font-size: 1rem;
+    padding: 13px 28px;
+  }
+
+  .new-btn {
+    font-size: 1rem;
+    padding: 14px 30px;
+  }
+
+  #msg {
+    padding: 15px;
+  }
+}
+
+/* Keyboard accessibility */
+
+button:focus-visible {
+  outline: 3px solid #00eaff;
+  outline-offset: 4px;
+}
